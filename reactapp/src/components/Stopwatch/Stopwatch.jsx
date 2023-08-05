@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import "./container_styling.css";
 export default function Stopwatch() {
   const [hour, sethour] = useState(0);
   const [min, setmin] = useState(0);
@@ -53,6 +54,7 @@ export default function Stopwatch() {
   });
   return (
     <div className="App">
+        <div className="container">
       <p data-testid="time">
         {hour < 10 ? "0" + hour : hour} : {min < 10 ? "0" + min : min} :{" "}
         {sec < 10 ? "0" + sec : sec}
@@ -71,6 +73,7 @@ export default function Stopwatch() {
       <button data-testid="reset" disabled={dis} onClick={onReset}>
         reset
       </button>
+      </div>
     </div>
   );
 }

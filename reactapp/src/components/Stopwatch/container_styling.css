@@ -14,14 +14,14 @@
     border: 10%;
 
 }
-.cont{
+.App{
     background-color:dodgerblue;
     height: 320px;
     width: 500px;
     text-align: center;
     display: block;
-    margin-left: 35%;
+    /* margin-left: 35%;
     margin-top: 10%;
-    position: absolute;
+    position: absolute; */
     border-radius: 25px;
 }
