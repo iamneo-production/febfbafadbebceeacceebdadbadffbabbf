@@ -20,8 +20,12 @@
     width: 500px;
     text-align: center;
     display: block;
-    /* margin-left: 35%;
-    margin-top: 10%;
-    position: absolute; */
+    margin-left: 35%; 
+    /* margin-top: 10%; */
+    position: absolute;
+    top:50%;
+    /* left:40%; */
+    transform: translateY(-50%);
+    /* transform: translateX(50%); */
     border-radius: 25px;
 }
