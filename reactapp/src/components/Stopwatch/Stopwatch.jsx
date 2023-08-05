@@ -1,75 +1,76 @@
-import React, { useState, useRef } from "react";
-import "./container_styling.css";
-
-const Stopwatch =() =>{
-    const [time, setTime] = useState(0);
-    const [isActive, setIsActive] = useState(false)
-    const [isPaused, setIsPaused] = useState(true)
-    const [isDisabled, setIsDisabled] = useState(true)
-    const increment = useRef(null)
-    let getSeconds,minutes , getMinutes , getHours;
-    const handleIncrement = () =>{
-        setIsActive(true);
-        setIsPaused(false);
-        setIsDisabled(false);
-
-        //let t;
-        increment.current = setInterval( () =>{
-            setTime((time)=>time+1)},1000);
-    }  
-    const handleReset = () =>{
-        setIsActive(false)
-        setIsPaused(true)
-        setIsDisabled(true);
-        clearInterval(increment.current);
-        setTime(0);
-        
-        
+import React from "react";
+import { useState, useEffect } from "react";
+export default function Stopwatch() {
+  const [hour, sethour] = useState(0);
+  const [min, setmin] = useState(0);
+  const [sec, setsec] = useState(0);
+  const [stop, setStop] = useState(true);
+  const [dis, setdis] = useState(true);
+  const [isstart, setstart] = useState(true);
+  const [ispause, setpause] = useState(false);
+  const onStart = () => {
+    setStop(false);
+    setdis(false);
+    setstart(false);
+  };
+  const onStop = () => {
+    setStop(true);
+    setpause(true);
+  };
+  const onReset = () => {
+    sethour(0);
+    setmin(0);
+    setsec(0);
+  };
+  const onResume = () => {
+    setStop(false);
+    setpause(false);
+  };
+  useEffect(() => {
+    let interval = null;
+    if (!stop) {
+      interval = setInterval(() => {
+        if (min > 59) {
+          sethour(hour + 1);
+          setmin(0);
+          clearInterval(interval);
+        }
+        if (sec > 59) {
+          setmin(min + 1);
+          setsec(0);
+          clearInterval(interval);
+        }
+        if (sec <= 59) {
+          setsec(sec + 1);
+        }
+      }, 1000);
+    } else {
+      clearInterval(interval);
     }
-    const handlePause = () =>{
-        setIsPaused(true);
-       
-        clearInterval(increment.current);
-    }
-    const handleResume = () =>{
-        setIsPaused(false);
-        //let t;
-        increment.current = setInterval( () =>{
-            setTime((time)=>time+1)},1000);
-    }
-    
-        
-         getSeconds = `0${(time % 60)}`.slice(-2)
-         minutes = `${Math.floor(time / 60)}`
-         getMinutes = `0${minutes % 60}`.slice(-2)
-         getHours = `0${Math.floor(time / 3600)}`.slice(-2)
-      
-        
-    
-   return(
-    <div className="cont">
-            <div className="container">
-                <h4> React Stopwatch</h4>
-                <h4>{getHours}:{getMinutes}:{getSeconds}</h4>
-                {
-                    (!isActive && isPaused)?
-                    <button  onClick= {handleIncrement} data-testid="start"> START</button> :
-                    (
-                        !isPaused ?<button  onClick={handlePause} data-testid="pause"> PAUSE</button>:
-                        <button  onClick={handleResume} data-testid="resume"> RESUME</button>
+    return () => {
+      clearInterval(interval);
+    };
+  });
+  return (
+    <div className="App">
+      <p data-testid="time">
+        {hour < 10 ? "0" + hour : hour} : {min < 10 ? "0" + min : min} :{" "}
+        {sec < 10 ? "0" + sec : sec}
+      </p>
 
-                    )
-                   
-                }
-                 <button  onClick={handleReset} disabled = {isDisabled} data-testid="reset"> RESET</button>
-            </div>
-        </div>
-   ) 
+      {isstart === false ? (
+        ispause === true ? (
+          <button data-testid="resume"onClick={onResume}>resume</button>
+        ) : (
+          <button data-testid="pause" onClick={onStop}>pause</button>
+        )
+      ) : (
+        <button data-testid="start" onClick={onStart}>start</button>
+      )}
+
+      <button data-testid="reset" disabled={dis} onClick={onReset}>
+        reset
+      </button>
+    </div>
+  );
 }
-
-export default Stopwatch;
-
-
-                
-                
-                
