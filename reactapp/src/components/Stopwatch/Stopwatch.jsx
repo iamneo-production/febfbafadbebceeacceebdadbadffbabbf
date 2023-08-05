@@ -53,6 +53,8 @@ export default function Stopwatch() {
     };
   });
   return (
+    <div className="main">
+
     <div className="App">
         <div className="container">
       <p data-testid="time">
@@ -74,6 +76,8 @@ export default function Stopwatch() {
         reset
       </button>
       </div>
+    </div>
+    
     </div>
   );
 }
